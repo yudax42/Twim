@@ -20,7 +20,7 @@ i created this tool to automate the process of video editing for my twitter work
     access_token_secret='YOUR_KEY_HERE'</pre>
 
 2. Run the script
-    <pre>Usage: ./main.py -i < inputfile > -d < day ></pre>
+    <pre>Usage: python3 main.py -i < inputfile > -d < day ></pre>
 
     **inputfile**: is the long video in MP4 format
 
