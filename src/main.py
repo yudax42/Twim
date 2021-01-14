@@ -1,9 +1,13 @@
 import sys, getopt
 import ffmpeg
-from decouple import config
 from tweet import tweetVideo
+import os
+os.system('echo 3 | sudo tee /proc/sys/vm/drop_caches >/dev/null 2>&1')
 
 #Parsing the arguments
+'''
+    parseArgs: returns input file and day from arguments
+'''
 def parseArgs(argv):
     try:
         opts, args = getopt.getopt(argv,"i:d:")
@@ -21,34 +25,37 @@ def parseArgs(argv):
     return inputfile, day
 
 #Video processing
+'''
+    videoInf: returns video duration in minutes
+'''
 def videoInf(inputfile):
     meta = ffmpeg.probe(inputfile)
     duration = round(float(meta['streams'][0]['duration']) / 60)
-    #duration = meta['streams'][0]['duration']
     return duration
+'''
+    process: converts long video to timelapse
+'''
 def process(inputfile, day):
-    print("processing...", inputfile, day)
-    
-    #duration = videoInf(inputfile)
-    #pts = str(1/duration) + "*PTS"
-    #print(duration, pts)
-
-    #stream = ffmpeg.input(inputfile)
-    #stream = ffmpeg.setpts(stream, pts)
-    #audio = ffmpeg.input('../audio/track1.mp3')
-    #stream = ffmpeg.output(audio,stream,'twitter1.mp4')
-    #ffmpeg.run(stream)
-
-#Tweet
-def tweet(day):
-    upload_result = api.media_upload('./d013twim.mp4')
-    #api.update_status(status="{day}", media_ids=[upload_result.media_id_string])
-
+    print("processing")
+    '''
+    duration = videoInf(inputfile)
+    #find and sets presentation timestamps for 1min video
+    pts = str(1/duration) + "*PTS"
+    stream = ffmpeg.input(inputfile)
+    stream = ffmpeg.setpts(stream, pts)
+    #merge the stream with music track
+    audio = ffmpeg.input('../audio/track1.mp3')
+    stream = ffmpeg.output(audio,stream,day+'twim.mp4')
+    ffmpeg.run(stream)
+    '''
 
 def main(argv):
     inputfile,day = parseArgs(argv)
+    totalpomo = round(videoInf(inputfile) / 50)
     process(inputfile,day)
-    tweetVideo('./d013twim.mp4')
+    print("tweeting...")
+    tweetVideo('./'+day+'twim.mp4','📅 '+ day+" - " + str(totalpomo) + " pomodoro sessions\n 50 min each")
+    print("done tweeting")
 
 if __name__ == "__main__":
     main(sys.argv[1:])
