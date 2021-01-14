@@ -4,9 +4,11 @@
 
 [X] parsing
 
-[ ] video processing
-    [ ] change PTS
-    [ ] merging audio
+[X] video processing
+
+    [X] change PTS
+
+    [X] merging audio
 
 [ ] tweet api
 
