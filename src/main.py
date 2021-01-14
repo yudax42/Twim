@@ -36,8 +36,6 @@ def videoInf(inputfile):
     process: converts long video to timelapse
 '''
 def process(inputfile, day):
-    print("processing")
-    '''
     duration = videoInf(inputfile)
     #find and sets presentation timestamps for 1min video
     pts = str(1/duration) + "*PTS"
@@ -47,7 +45,6 @@ def process(inputfile, day):
     audio = ffmpeg.input('../audio/track1.mp3')
     stream = ffmpeg.output(audio,stream,day+'twim.mp4')
     ffmpeg.run(stream)
-    '''
 
 def main(argv):
     inputfile,day = parseArgs(argv)
