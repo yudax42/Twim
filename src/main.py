@@ -1,7 +1,13 @@
 import sys, getopt
 import ffmpeg
+from decouple import config
+import twitter
 
-#inputs
+#Twitter credentials
+api = twitter.Api(consumer_key=config('consumer_key'),
+                      consumer_secret=config('consumer_secret'),
+                      access_token_key=config('access_token'),
+                      access_token_secret=config('access_token_secret'))
 
 #Parsing the arguments
 def parseArgs(argv):
@@ -28,21 +34,22 @@ def videoInf(inputfile):
     return duration
 def process(inputfile, day):
     print("processing...", inputfile, day)
-    duration = videoInf(inputfile)
-    pts = str(1/duration) + "*PTS"
-    print(duration, pts)
+    
+    #duration = videoInf(inputfile)
+    #pts = str(1/duration) + "*PTS"
+    #print(duration, pts)
 
-    stream = ffmpeg.input(inputfile)
-    stream = ffmpeg.setpts(stream, pts)
-    audio = ffmpeg.input('../audio/track1.mp3')
-    stream = ffmpeg.output(audio,stream,'twitter1.mp4')
-    ffmpeg.run(stream)
+    #stream = ffmpeg.input(inputfile)
+    #stream = ffmpeg.setpts(stream, pts)
+    #audio = ffmpeg.input('../audio/track1.mp3')
+    #stream = ffmpeg.output(audio,stream,'twitter1.mp4')
+    #ffmpeg.run(stream)
     
 
 def main(argv):
     inputfile,day = parseArgs(argv)
     process(inputfile,day)
-
+    print(api.VerifyCredentials())
 
 if __name__ == "__main__":
     main(sys.argv[1:])
