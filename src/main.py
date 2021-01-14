@@ -49,10 +49,11 @@ def process(inputfile, day):
 def main(argv):
     inputfile,day = parseArgs(argv)
     totalpomo = round(videoInf(inputfile) / 50)
+    print("⚙️ processing the video ...")
     process(inputfile,day)
-    print("tweeting...")
+    print("🐦 tweeting...")
     tweetVideo('./'+day+'twim.mp4','📅 '+ day+" - " + str(totalpomo) + " pomodoro sessions\n 50 min each")
-    print("done tweeting")
+    print("✅ Done!")
 
 if __name__ == "__main__":
     main(sys.argv[1:])
