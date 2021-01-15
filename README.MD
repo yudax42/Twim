@@ -1,6 +1,6 @@
 # 🐦 twim
 i created this tool to automate the process of video editing for my twitter working timelapse.
-
+fsdafsdaf
 ## What it does?f
 1- create a 1min video timelapse from a long video 
 
