@@ -26,6 +26,12 @@ i created this tool to automate the process of video editing for my twitter work
 
     **day**: the current working day number
 
+-> if you want to merge two video streams 
+    <pre>Usage: python3 merge.py -i < file1 > -c < file2 ></pre>
+
+    **file1,file2**: is the long video in MP4 format
+
+
 ## Requirements
 - Python3
 - Pip3
